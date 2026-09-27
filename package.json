@@ -1,0 +1,16 @@
+{
+  "name": "ecotrack",
+  "version": "1.0.0",
+  "description": "EcoTrack – Smart Waste Collection & Recycling Platform for FIT-FEST 2026 HACKATHON",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "server": "node server/server.js",
+    "client": "npm --prefix client run dev",
+    "dev": "node server/server.js",
+    "seed": "node server/seed.js",
+    "build": "npm --prefix client run build"
+  },
+  "author": "FIT-FEST 2026 Participant",
+  "license": "MIT"
+}
