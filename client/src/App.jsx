@@ -11,6 +11,7 @@ import AdminRequests from './pages/AdminRequests';
 import AdminScheduled from './pages/AdminScheduled';
 import AdminHistory from './pages/AdminHistory';
 import AdminAnalytics from './pages/AdminAnalytics';
+import AdminWaves from './pages/AdminWaves';
 import { AuthProvider, useAuth } from './context/AuthContext';
 
 // Protected Route wrapper for Admin panel
@@ -43,6 +44,14 @@ export default function App() {
                 element={
                   <ProtectedAdminRoute>
                     <AdminDashboard />
+                  </ProtectedAdminRoute>
+                }
+              />
+              <Route
+                path="/admin/waves"
+                element={
+                  <ProtectedAdminRoute>
+                    <AdminWaves />
                   </ProtectedAdminRoute>
                 }
               />

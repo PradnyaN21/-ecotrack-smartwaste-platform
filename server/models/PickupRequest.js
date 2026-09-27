@@ -66,6 +66,28 @@ const pickupRequestSchema = new mongoose.Schema(
       enum: ['Pending', 'Scheduled', 'Assigned', 'Picked Up', 'Completed', 'Cancelled'],
       default: 'Pending',
     },
+    // EcoFlow Intelligence fields
+    ecoScore: {
+      type: Number,
+      default: 80,
+    },
+    ecoPoints: {
+      type: Number,
+      default: 50,
+    },
+    estimatedDiversionKg: {
+      type: Number,
+      default: 0,
+    },
+    collectionWaveId: {
+      type: String,
+      default: '',
+    },
+    collectionPriority: {
+      type: String,
+      enum: ['HIGH', 'MEDIUM', 'LOW'],
+      default: 'MEDIUM',
+    },
   },
   {
     timestamps: true,

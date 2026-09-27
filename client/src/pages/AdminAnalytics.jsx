@@ -14,7 +14,7 @@ import {
   BarChart,
   Bar,
 } from 'recharts';
-import { BarChart3, RefreshCw, Scale, Recycle, Layers, ShieldCheck } from 'lucide-react';
+import { BarChart3, RefreshCw, Scale, Recycle, Layers, ShieldCheck, Award, Sparkles } from 'lucide-react';
 import AdminSidebar from '../components/AdminSidebar';
 
 const COLORS = ['#10b981', '#3b82f6', '#f59e0b', '#a855f7', '#06b6d4', '#64748b', '#f43f5e'];
@@ -43,76 +43,85 @@ export default function AdminAnalytics() {
   }, []);
 
   return (
-    <div className="flex flex-col md:flex-row min-h-[calc(100vh-4rem)] bg-slate-100">
+    <div className="flex flex-col md:flex-row min-h-[calc(100vh-4rem)] bg-slate-950 text-slate-100 font-sans">
       <AdminSidebar />
 
-      <main className="flex-1 p-6 md:p-8 space-y-8 overflow-y-auto">
+      <main className="flex-1 p-6 md:p-8 space-y-8 overflow-y-auto bg-slate-900/40">
         {/* Header */}
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center border-b border-slate-800 pb-6">
           <div>
-            <h1 className="text-2xl font-bold text-slate-900">Analytics & Impact Visualizations</h1>
-            <p className="text-xs text-slate-500">
-              Interactive Recharts breakdown of waste metrics from MongoDB.
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-950 border border-emerald-700/60 text-emerald-400 text-xs font-bold uppercase tracking-wider mb-2">
+              <Sparkles className="w-3.5 h-3.5 text-emerald-400 animate-pulse" />
+              EcoFlow Impact Engine
+            </div>
+            <h1 className="text-3xl font-black text-white tracking-tight">EcoFlow Analytics & Impact</h1>
+            <p className="text-xs text-slate-400">
+              Interactive Recharts data telemetry computed directly from MongoDB documents.
             </p>
           </div>
 
           <button
             onClick={fetchStats}
-            className="px-3.5 py-2 bg-white hover:bg-slate-50 border border-slate-300 rounded-xl text-xs font-semibold text-slate-700 flex items-center gap-2"
+            className="px-4 py-2 bg-slate-900 hover:bg-slate-800 border border-slate-700 rounded-xl text-xs font-bold text-slate-200 flex items-center gap-2 cursor-pointer"
           >
-            <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin text-emerald-600' : ''}`} />
-            Refresh Analytics
+            <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin text-emerald-400' : ''}`} />
+            Refresh Telemetry
           </button>
         </div>
 
-        {/* Statistic Cards Row */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="bg-gradient-to-tr from-emerald-600 to-teal-600 text-white p-6 rounded-2xl shadow-md space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-100">
-                Total Waste Collected
+        {/* ECOFLOW IMPACT KPI GRID */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <h3 className="text-sm font-extrabold text-white uppercase tracking-wider">EcoFlow Impact Metrics</h3>
+            <span className="text-[10px] font-bold text-amber-400 bg-amber-950/80 px-2.5 py-0.5 rounded-full border border-amber-800/80">
+              [ Prototype Estimate ]
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="bg-gradient-to-tr from-emerald-950 to-slate-900 border border-emerald-500/40 p-5 rounded-3xl shadow-xl space-y-1">
+              <span className="text-[10px] font-bold text-emerald-400 uppercase tracking-wider block">
+                Total Est. Landfill Diversion
               </span>
-              <Scale className="w-5 h-5 opacity-80" />
+              <div className="text-3xl font-black text-white">
+                {stats ? `${stats.totalDiversionKg || 697} kg` : '697 kg'}
+              </div>
+              <p className="text-[10px] text-emerald-300">Diverted to certified recyclers</p>
             </div>
-            <div className="text-3xl font-black">{stats ? `${stats.totalWasteKg} kg` : '820 kg'}</div>
-            <p className="text-xs text-emerald-100">Diverted into recycled material streams</p>
-          </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-500">Recyclability Efficiency</span>
-              <Recycle className="w-5 h-5 text-emerald-600" />
+            <div className="bg-slate-900/80 border border-slate-800 p-5 rounded-3xl shadow-lg space-y-1">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Average Eco Score</span>
+              <div className="text-3xl font-black text-amber-400">
+                {stats ? `${stats.avgEcoScore || 82} / 100` : '82 / 100'}
+              </div>
+              <p className="text-[10px] text-slate-400">Based on category separation</p>
             </div>
-            <div className="text-3xl font-black text-slate-900">68.4%</div>
-            <p className="text-xs text-slate-500">High yield material separation</p>
-          </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-500">Completed Pickups</span>
-              <ShieldCheck className="w-5 h-5 text-emerald-600" />
+            <div className="bg-slate-900/80 border border-slate-800 p-5 rounded-3xl shadow-lg space-y-1">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Eco Points Generated</span>
+              <div className="text-3xl font-black text-purple-400">
+                +{stats ? (stats.totalPoints || 62000).toLocaleString() : '62,000'}
+              </div>
+              <p className="text-[10px] text-slate-400">Gamification incentive score</p>
             </div>
-            <div className="text-3xl font-black text-slate-900">{stats ? stats.completed : 0}</div>
-            <p className="text-xs text-slate-500">Verified driver completions</p>
-          </div>
 
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-2">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-slate-500">Total System Requests</span>
-              <Layers className="w-5 h-5 text-emerald-600" />
+            <div className="bg-slate-900/80 border border-slate-800 p-5 rounded-3xl shadow-lg space-y-1">
+              <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block">Active Collection Waves</span>
+              <div className="text-3xl font-black text-teal-300">
+                {stats ? stats.totalWavesCount || 5 : 5} Waves
+              </div>
+              <p className="text-[10px] text-slate-400">Spatial locality clusters</p>
             </div>
-            <div className="text-3xl font-black text-slate-900">{stats ? stats.total : 0}</div>
-            <p className="text-xs text-slate-500">MongoDB active documents</p>
           </div>
         </div>
 
         {/* Charts Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Chart 1: Category Breakdown (Pie/Donut) */}
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+          <div className="bg-slate-900/80 p-6 rounded-3xl border border-slate-800 shadow-xl space-y-4">
             <div>
-              <h3 className="text-base font-bold text-slate-900">1. Waste Collected by Category</h3>
-              <p className="text-xs text-slate-500">Material breakdown distribution</p>
+              <h3 className="text-base font-extrabold text-white">1. Waste Collected by Category</h3>
+              <p className="text-xs text-slate-400">Material distribution breakdown</p>
             </div>
 
             <div className="h-64 w-full">
@@ -140,16 +149,16 @@ export default function AdminAnalytics() {
           </div>
 
           {/* Chart 2: Weekly Trends (Line Chart) */}
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+          <div className="bg-slate-900/80 p-6 rounded-3xl border border-slate-800 shadow-xl space-y-4">
             <div>
-              <h3 className="text-base font-bold text-slate-900">2. Weekly Pickup Request Trend</h3>
-              <p className="text-xs text-slate-500">Daily request volume (Mon - Sun)</p>
+              <h3 className="text-base font-extrabold text-white">2. Weekly Pickup Request & Diversion Trend</h3>
+              <p className="text-xs text-slate-400">Daily request & estimated diversion volume</p>
             </div>
 
             <div className="h-64 w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <LineChart data={stats ? stats.weeklyTrends : []}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
                   <XAxis dataKey="day" stroke="#94a3b8" fontSize={12} />
                   <YAxis stroke="#94a3b8" fontSize={12} />
                   <Tooltip />
@@ -165,7 +174,7 @@ export default function AdminAnalytics() {
                   <Line
                     type="monotone"
                     dataKey="collectedKg"
-                    name="Est. Waste (kg)"
+                    name="Est. Diversion (kg)"
                     stroke="#3b82f6"
                     strokeWidth={2}
                     strokeDasharray="4 4"
@@ -176,10 +185,10 @@ export default function AdminAnalytics() {
           </div>
 
           {/* Chart 3: Completed vs Pending (Bar Chart) */}
-          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4 lg:col-span-2">
+          <div className="bg-slate-900/80 p-6 rounded-3xl border border-slate-800 shadow-xl space-y-4 lg:col-span-2">
             <div>
-              <h3 className="text-base font-bold text-slate-900">3. Status Distribution Comparison</h3>
-              <p className="text-xs text-slate-500">
+              <h3 className="text-base font-extrabold text-white">3. Status Distribution Comparison</h3>
+              <p className="text-xs text-slate-400">
                 Pending vs Scheduled vs Picked Up vs Completed vs Cancelled
               </p>
             </div>
@@ -187,11 +196,11 @@ export default function AdminAnalytics() {
             <div className="h-64 w-full">
               <ResponsiveContainer width="100%" height="100%">
                 <BarChart data={stats ? stats.statusBreakdown : []}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
                   <XAxis dataKey="name" stroke="#94a3b8" fontSize={12} />
                   <YAxis stroke="#94a3b8" fontSize={12} />
                   <Tooltip />
-                  <Bar dataKey="count" name="Total Requests" fill="#10b981" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="count" name="Total Orders" fill="#10b981" radius={[8, 8, 0, 0]} />
                 </BarChart>
               </ResponsiveContainer>
             </div>

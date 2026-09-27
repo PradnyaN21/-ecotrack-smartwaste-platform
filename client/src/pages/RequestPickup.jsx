@@ -19,8 +19,10 @@ import {
   Boxes,
   Recycle,
   PackageCheck,
+  ArrowRight,
 } from 'lucide-react';
 import SmartWasteGuide from '../components/SmartWasteGuide';
+import EcoPassport from '../components/EcoPassport';
 
 const categories = [
   { name: 'Plastic', icon: Layers, color: 'text-emerald-600 bg-emerald-50 border-emerald-200' },
@@ -61,7 +63,6 @@ export default function RequestPickup() {
     e.preventDefault();
     setError('');
 
-    // Frontend validation
     if (
       !formData.name.trim() ||
       !formData.phone.trim() ||
@@ -104,88 +105,51 @@ export default function RequestPickup() {
 
   if (submittedData) {
     return (
-      <div className="max-w-2xl mx-auto py-12 px-4 sm:px-6">
-        <div className="bg-white rounded-3xl border border-emerald-200 shadow-xl p-8 sm:p-10 text-center space-y-6">
-          <div className="w-16 h-16 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto shadow-sm">
-            <CheckCircle2 className="w-10 h-10" />
-          </div>
-
+      <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 space-y-6">
+        <div className="bg-emerald-50 border border-emerald-200 p-4 rounded-2xl flex items-center gap-3 text-emerald-900">
+          <CheckCircle2 className="w-6 h-6 text-emerald-600 shrink-0" />
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-600 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-              Request Submitted
-            </span>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-2">
-              Pickup Request Submitted Successfully
-            </h2>
-            <p className="text-sm text-slate-600 mt-1">
-              Your request has been registered in the EcoTrack system.
+            <h3 className="font-bold text-base">Pickup Request Submitted Successfully!</h3>
+            <p className="text-xs text-emerald-800">
+              Your order has been registered in MongoDB and grouped into an EcoFlow Collection Wave.
             </p>
           </div>
+        </div>
 
-          <div className="bg-slate-50 rounded-2xl p-6 border border-slate-200 text-left space-y-3">
-            <div className="flex justify-between items-center border-b border-slate-200 pb-3">
-              <span className="text-xs text-slate-500 font-medium">Request ID</span>
-              <span className="text-lg font-black text-emerald-700 tracking-wide font-mono">
-                {submittedData.requestId}
-              </span>
-            </div>
+        {/* ECOFLOW WASTE PASSPORT DISPLAY */}
+        <EcoPassport request={submittedData} />
 
-            <div className="flex justify-between items-center">
-              <span className="text-xs text-slate-500 font-medium">Current Status</span>
-              <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800 border border-amber-300">
-                {submittedData.status}
-              </span>
-            </div>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center pt-4">
+          <Link
+            to={`/track?id=${submittedData.requestId}`}
+            className="px-8 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm shadow-xl flex items-center justify-center gap-2 transition-all cursor-pointer"
+          >
+            <Search className="w-4 h-4" />
+            Track Request & Journey
+            <ArrowRight className="w-4 h-4" />
+          </Link>
 
-            <div className="flex justify-between items-center text-xs text-slate-600">
-              <span>Customer:</span>
-              <span className="font-semibold text-slate-800">{submittedData.name}</span>
-            </div>
-
-            <div className="flex justify-between items-center text-xs text-slate-600">
-              <span>Waste Category:</span>
-              <span className="font-semibold text-slate-800">{submittedData.wasteCategory}</span>
-            </div>
-
-            <div className="flex justify-between items-center text-xs text-slate-600">
-              <span>Scheduled Date & Time:</span>
-              <span className="font-semibold text-slate-800">
-                {submittedData.pickupDate} ({submittedData.pickupTime})
-              </span>
-            </div>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-3 justify-center pt-2">
-            <Link
-              to={`/track?id=${submittedData.requestId}`}
-              className="px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm shadow-md flex items-center justify-center gap-2 transition-all"
-            >
-              <Search className="w-4 h-4" />
-              Track Request
-            </Link>
-
-            <button
-              onClick={() => {
-                setSubmittedData(null);
-                setFormData({
-                  name: '',
-                  phone: '',
-                  email: '',
-                  wasteCategory: 'Plastic',
-                  quantity: '1-5 kg (Small Bag)',
-                  address: '',
-                  city: 'Sangli',
-                  locality: '',
-                  pickupDate: new Date(Date.now() + 86400000).toISOString().split('T')[0],
-                  pickupTime: '10:00 AM - 12:00 PM',
-                  notes: '',
-                });
-              }}
-              className="px-6 py-3.5 rounded-xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold text-sm transition-all"
-            >
-              Submit Another Request
-            </button>
-          </div>
+          <button
+            onClick={() => {
+              setSubmittedData(null);
+              setFormData({
+                name: '',
+                phone: '',
+                email: '',
+                wasteCategory: 'Plastic',
+                quantity: '1-5 kg (Small Bag)',
+                address: '',
+                city: 'Sangli',
+                locality: '',
+                pickupDate: new Date(Date.now() + 86400000).toISOString().split('T')[0],
+                pickupTime: '10:00 AM - 12:00 PM',
+                notes: '',
+              });
+            }}
+            className="px-8 py-4 rounded-2xl bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 font-bold text-sm shadow-xs transition-all cursor-pointer"
+          >
+            Submit Another Request
+          </button>
         </div>
       </div>
     );
@@ -195,21 +159,21 @@ export default function RequestPickup() {
     <div className="max-w-4xl mx-auto py-10 px-4 sm:px-6 space-y-8">
       {/* Header */}
       <div className="text-center space-y-2">
-        <h1 className="text-3xl font-extrabold text-slate-900">Request a Waste Pickup</h1>
+        <h1 className="text-3xl font-black text-slate-900">Start a Waste Pickup</h1>
         <p className="text-sm text-slate-600 max-w-xl mx-auto">
-          Fill out the details below to schedule a responsible pickup. Track live progress using your generated Request ID.
+          Fill out the details below to generate your EcoFlow Waste Passport and schedule collection.
         </p>
       </div>
 
       {error && (
-        <div className="bg-rose-50 border border-rose-200 text-rose-800 p-4 rounded-xl flex items-center gap-3 text-sm">
+        <div className="bg-rose-50 border border-rose-200 text-rose-800 p-4 rounded-2xl flex items-center gap-3 text-sm">
           <AlertCircle className="w-5 h-5 text-rose-600 shrink-0" />
           <span>{error}</span>
         </div>
       )}
 
-      {/* Main Form */}
-      <form onSubmit={handleSubmit} className="bg-white rounded-2xl border border-slate-200 shadow-md p-6 sm:p-8 space-y-8">
+      {/* Form */}
+      <form onSubmit={handleSubmit} className="bg-white rounded-3xl border border-slate-200 shadow-lg p-6 sm:p-8 space-y-8">
         {/* Step 1: Select Waste Category */}
         <div className="space-y-4">
           <label className="block text-sm font-bold text-slate-900">
@@ -226,13 +190,13 @@ export default function RequestPickup() {
                   type="button"
                   key={cat.name}
                   onClick={() => setFormData({ ...formData, wasteCategory: cat.name })}
-                  className={`p-3 rounded-xl border text-center transition-all flex flex-col items-center gap-1.5 cursor-pointer ${
+                  className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center gap-1.5 cursor-pointer ${
                     isSelected
-                      ? 'bg-emerald-600 text-white border-emerald-600 shadow-md ring-2 ring-emerald-200 font-bold'
+                      ? 'bg-emerald-600 text-white border-emerald-600 shadow-md ring-2 ring-emerald-200 font-bold scale-105'
                       : 'bg-white hover:bg-slate-50 border-slate-200 text-slate-700'
                   }`}
                 >
-                  <div className={`p-2 rounded-lg ${isSelected ? 'bg-white/20 text-white' : cat.color}`}>
+                  <div className={`p-2 rounded-xl ${isSelected ? 'bg-white/20 text-white' : cat.color}`}>
                     <Icon className="w-4 h-4" />
                   </div>
                   <span className="text-xs">{cat.name}</span>
@@ -241,7 +205,6 @@ export default function RequestPickup() {
             })}
           </div>
 
-          {/* Dynamic Smart Guide display */}
           <SmartWasteGuide category={formData.wasteCategory} />
         </div>
 
@@ -370,16 +333,16 @@ export default function RequestPickup() {
                 name="locality"
                 value={formData.locality}
                 onChange={handleChange}
-                placeholder="e.g. Vishrambag / Near Bus Stand"
+                placeholder="e.g. Ashta East / Vishrambag"
                 className="w-full px-3 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white"
               />
             </div>
           </div>
         </div>
 
-        {/* Step 4: Date & Time Schedule */}
+        {/* Step 4: Schedule */}
         <div className="space-y-4 pt-4 border-t border-slate-100">
-          <label className="block text-sm font-bold text-slate-900">4. Select Date & Time Slot</label>
+          <label className="block text-sm font-bold text-slate-900">4. Select Date & Time Window</label>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -401,7 +364,7 @@ export default function RequestPickup() {
 
             <div>
               <label className="block text-xs font-semibold text-slate-700 mb-1">
-                Pickup Time Slot <span className="text-rose-500">*</span>
+                Time Window <span className="text-rose-500">*</span>
               </label>
               <div className="relative">
                 <Clock className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
@@ -439,14 +402,14 @@ export default function RequestPickup() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full sm:w-auto px-8 py-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-base shadow-lg shadow-emerald-600/30 flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50"
+            className="w-full sm:w-auto px-8 py-4 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-base shadow-xl shadow-emerald-600/30 flex items-center justify-center gap-2 transition-all cursor-pointer disabled:opacity-50"
           >
             {loading ? (
-              <span>Scheduling...</span>
+              <span>Generating Eco Passport...</span>
             ) : (
               <>
                 <Truck className="w-5 h-5" />
-                <span>Schedule Pickup</span>
+                <span>Submit & Generate Passport</span>
               </>
             )}
           </button>
