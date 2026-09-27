@@ -1,44 +1,275 @@
 # 🌱 EcoTrack – Smart Waste Collection & Recycling Platform
 
-EcoTrack is a web-based platform that helps users **request, schedule, and track waste collection** while helping administrators manage collection requests efficiently.
+**EcoTrack** is a smart web platform for managing waste collection digitally. Users can submit pickup requests, schedule collections, track their requests, and view their waste impact. Administrators can manage requests, update statuses, organize **Collection Waves**, and monitor analytics.
 
-## 🚀 Features
+> **Waste In. Impact Out. ♻️**
 
-* 🗑️ Waste pickup request
-* ♻️ Waste category selection
-* 📅 Pickup scheduling
-* 🔎 Track request using Request ID
-* 📊 Admin dashboard & analytics
-* 🔄 Pickup status updates
-* 🌱 **Waste Passport** with Eco Score & Eco Points
-* 🌊 **Collection Waves** for grouping nearby/similar requests
-* 🔍 Search and filter requests
-* 📱 Responsive modern UI
+---
+
+## 🎯 Problem Statement
+
+Traditional waste collection can be difficult to manage because:
+
+* Pickup requests are often handled manually.
+* Users have limited visibility of pickup status.
+* Waste categories are not always properly organized.
+* Administrators need an efficient way to manage multiple requests.
+* There is limited information about recycling and waste impact.
+
+---
+
+## 💡 Solution
+
+EcoTrack provides a centralized digital platform where:
+
+* Users can submit waste pickup requests.
+* Waste can be categorized before collection.
+* Users can select pickup date and time.
+* Every request receives a unique Request ID.
+* Users can track their pickup status.
+* Admins can manage and update requests.
+* Similar requests can be grouped into **Collection Waves**.
+* A **Waste Passport** shows Eco Score, Eco Points, and estimated waste impact.
+* Analytics provide an overview of collection activity.
+
+---
+
+## 🚀 Key Features
+
+### 👤 User Features
+
+* Waste pickup request
+* Waste category selection
+* Pickup scheduling
+* Request ID generation
+* Request tracking
+* Pickup history
+* Waste Passport
+* Eco Score & Eco Points
+* Waste handling guide
+
+### 👨‍💼 Admin Features
+
+* Admin login
+* Dashboard
+* View all pickup requests
+* Search and filter
+* Update pickup status
+* Collection Waves
+* Analytics dashboard
+
+### 🌱 Smart Features
+
+* Rule-based Eco Score
+* Eco Points
+* Estimated landfill diversion
+* Collection priority
+* Collection Wave grouping
+
+> Smart features are **rule-based** and do not use AI/ML.
+
+---
+
+## 🔄 Workflow
+
+```text
+User
+  ↓
+Select Waste Category
+  ↓
+Enter Pickup Details
+  ↓
+Select Date & Time
+  ↓
+Submit Request
+  ↓
+Generate Request ID
+  ↓
+Create Waste Passport
+  ↓
+Calculate Eco Score & Eco Points
+  ↓
+Create / Assign Collection Wave
+  ↓
+Admin Reviews Request
+  ↓
+Admin Updates Status
+  ↓
+User Tracks Request
+  ↓
+Analytics Updated
+```
+
+---
+
+## ⚙️ How It Works
+
+### 1. Request Pickup
+
+The user enters their name, contact details, waste category, quantity, address, and preferred pickup time.
+
+### 2. Request ID
+
+The system generates a unique ID such as:
+
+```text
+ET-2026-1234
+```
+
+### 3. Waste Passport
+
+The system creates a simple Waste Passport containing:
+
+* Waste category
+* Quantity
+* Eco Score
+* Eco Points
+* Estimated diversion
+* Collection priority
+
+### 4. Collection Waves
+
+The system groups suitable requests based on factors such as:
+
+* City
+* Locality
+* Pickup date/time
+* Waste category
+
+This helps organize similar collection requests together.
+
+### 5. Admin Management
+
+The administrator can search requests and update their status:
+
+```text
+Pending
+   ↓
+Scheduled
+   ↓
+Assigned
+   ↓
+Picked Up
+   ↓
+Completed
+```
+
+### 6. Tracking
+
+Users enter their Request ID to view the latest pickup status and Waste Passport.
+
+### 7. Analytics
+
+The dashboard displays collection statistics and environmental indicators.
+
+---
 
 ## 🛠️ Tech Stack
 
-**Frontend:** React, Vite, Tailwind CSS
-**Backend:** Node.js, Express.js
-**Database:** MongoDB
-**Charts:** Recharts
-**Icons:** Lucide React
-**Deployment:** Google Cloud Run
+### Frontend
 
-## ⚙️ Run Locally
+* React.js
+* Vite
+* Tailwind CSS
+* React Router
+* Lucide React
+* Recharts
+
+### Backend
+
+* Node.js
+* Express.js
+* REST API
+
+### Database
+
+* MongoDB
+* Mongoose
+
+### Deployment
+
+* Docker
+* Google Cloud Run
+
+---
+
+## 🔌 API Endpoints
+
+| Method | Endpoint                          | Purpose               |
+| ------ | --------------------------------- | --------------------- |
+| POST   | `/api/requests`                   | Create pickup request |
+| GET    | `/api/requests`                   | Get all requests      |
+| GET    | `/api/requests/:requestId`        | Track request         |
+| PATCH  | `/api/requests/:requestId/status` | Update status         |
+| GET    | `/api/statistics`                 | Get analytics         |
+| GET    | `/api/waves`                      | Get collection waves  |
+| GET    | `/api/waves/:waveId`              | Get wave details      |
+
+---
+
+## 📁 Repository Structure
+
+```text
+ecotrack/
+│
+├── client/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   └── package.json
+│
+├── server/
+│   ├── models/
+│   ├── routes/
+│   ├── controllers/
+│   ├── utils/
+│   ├── seed.js
+│   └── server.js
+│
+├── public/
+│
+├── Dockerfile
+├── .env.example
+├── .gitignore
+├── package.json
+└── README.md
+```
+
+> Folder names may vary slightly depending on the final project structure generated by Antigravity.
+
+---
+
+## 💻 Run Locally
+
+Clone the repository:
+
+```bash
+git clone https://github.com/PradnyaN21/-ecotrack-smartwaste-platform.git
+cd -ecotrack-smartwaste-platform
+```
+
+Install dependencies:
 
 ```bash
 npm install
-npm run dev
 ```
 
-Make sure MongoDB is running locally.
-
-Example `.env`:
+Create `.env`:
 
 ```env
 MONGODB_URI=mongodb://127.0.0.1:27017/ecotrack
 PORT=8080
 ```
+
+Start the application:
+
+```bash
+npm run dev
+```
+
+---
 
 ## 👨‍💼 Demo Admin Login
 
@@ -47,21 +278,33 @@ Email: admin@ecotrack.com
 Password: admin123
 ```
 
-## 🔄 Project Flow
+---
 
-**User → Request Pickup → Waste Passport → Track Request → Admin → Collection Wave → Status Update → Analytics**
+## 🌍 Expected Impact
 
-## 🌍 Impact
+EcoTrack aims to make waste collection more **organized, transparent, and measurable** by connecting users and administrators through a single digital platform.
 
-EcoTrack helps organize waste collection and promotes responsible waste segregation through simple digital tools and measurable environmental indicators.
+---
 
-> **Waste In. Impact Out. 🌱**
 
-## 👩‍💻 Developed For
 
-**FIT-FEST 2026 Hackathon**
-Flora Institute of Technology, Pune
+## 📌 Project Links
 
-### Hashtags
+**GitHub Repository:**
+https://github.com/PradnyaN21/-ecotrack-smartwaste-platform
 
-#FITFEST2026 #FITFESTHACKATHON #GDGFITPUNE #GDGPUNE #HACKATHON2026 #STUDENTHACKATHON #TECHHACKATHON
+
+---
+
+## 👩‍💻 Developed By
+
+**Pradnya Nangare**
+AI & Data Science Student
+Annasaheb Dange College of Engineering & Technology, Ashta
+
+---
+
+### ♻️ EcoTrack
+
+**Waste In. Impact Out.**
+
